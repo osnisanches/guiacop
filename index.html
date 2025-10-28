@@ -2,55 +2,42 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Guia COP</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body, html {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background: white;
-        }
-        
-        .container {
-            width: 100vw;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-        }
-        
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia COP - Selecione o Idioma</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <iframe src="https://drive.google.com/file/d/17GBTGkHB1s_nKUjjPCUvGDn8pDAIqtlF/preview?toolbar=0&navpanes=0&scrollbar=0&view=fitH&embedded=true"></iframe>
+        <div class="language-selection">
+            <h1>Guia COP</h1>
+            <p>Selecione seu idioma / Select your language / Seleccione su idioma</p>
+            
+            <div class="flags">
+                <button class="flag-btn" onclick="selectLanguage('pt')">
+                    <img src="https://flagcdn.com/w40/br.png" alt="Português">
+                    <span>Português</span>
+                </button>
+                
+                <button class="flag-btn" onclick="selectLanguage('en')">
+                    <img src="https://flagcdn.com/w40/us.png" alt="English">
+                    <span>English</span>
+                </button>
+                
+                <button class="flag-btn" onclick="selectLanguage('es')">
+                    <img src="https://flagcdn.com/w40/es.png" alt="Español">
+                    <span>Español</span>
+                </button>
+            </div>
+            
+            <div class="auto-open">
+                <label>
+                    <input type="checkbox" id="autoOpen" checked>
+                    Abrir automaticamente na próxima vez
+                </label>
+            </div>
+        </div>
     </div>
     
-    <script>
-        // Garante que o iframe ocupe toda a tela
-        document.addEventListener('DOMContentLoaded', function() {
-            var iframe = document.querySelector('iframe');
-            iframe.style.width = window.innerWidth + 'px';
-            iframe.style.height = window.innerHeight + 'px';
-            
-            window.addEventListener('resize', function() {
-                iframe.style.width = window.innerWidth + 'px';
-                iframe.style.height = window.innerHeight + 'px';
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
