@@ -21,7 +21,6 @@
             border: none;
         }
         
-        /* Badge flutuante */
         .floating-badge {
             position: fixed;
             bottom: 20px;
@@ -54,16 +53,9 @@
             height: 12px;
             border-radius: 2px;
         }
-        
-        /* Remove qualquer padding do container */
-        .viewer-container {
-            padding-top: 0;
-            height: 100vh;
-        }
     </style>
 </head>
 <body>
-    <!-- Badge flutuante no canto inferior direito -->
     <div class="floating-badge" onclick="goBack()">
         <img src="" alt="" class="flag-small" id="flagIcon">
         <span id="languageBadge">PT</span>
@@ -82,119 +74,87 @@
             'es': 'Español'
         };
 
-        // Mapeamento de bandeiras
         const LANGUAGE_FLAGS = {
             'pt': 'https://flagcdn.com/w40/br.png',
             'en': 'https://flagcdn.com/w40/us.png',
             'es': 'https://flagcdn.com/w40/es.png'
         };
 
-        // IDs dos PDFs atualizados
         const PDF_IDS = {
             'pt': '17GBTGkHB1s_nKUjjPCUvGDn8pDAIqtlF',
             'en': '1_BwDQ1G8zMeclAOEH_OdpbXGmTPq0Ayf',
             'es': '1dNRiqi6PGDdLTDoz8dHx9XVp4PSDMoB3'
         };
 
-        // Gera a URL otimizada para o PDF
         function getPDFUrl(fileId) {
             const baseParams = 'toolbar=0&navpanes=0&scrollbar=0&view=fitH&embedded=true';
             return `https://drive.google.com/file/d/${fileId}/preview?${baseParams}`;
         }
 
-        // Obtém o idioma da URL
         function getLanguageFromURL() {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get('lang') || 'pt';
         }
 
-        // Configura o visualizador
+        // NOVA FUNÇÃO: Detecta e trata links automaticamente
+        function handleAutoLinks() {
+            // Monitora mudanças no iframe periodicamente
+            setInterval(() => {
+                try {
+                    const iframe = document.getElementById('pdfViewer');
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    
+                    // Encontra todos os links no PDF
+                    const links = iframeDoc.querySelectorAll('a[href]');
+                    
+                    links.forEach(link => {
+                        const href = link.getAttribute('href');
+                        
+                        // Se for um link tel: ou maps:, substitui por nossa página de redirect
+                        if (href && (href.startsWith('tel:') || href.startsWith('mailto:') || 
+                                    href.includes('maps.') || href.includes('google.com/maps'))) {
+                            
+                            let type = 'web';
+                            if (href.startsWith('tel:')) type = 'tel';
+                            if (href.startsWith('mailto:')) type = 'mail';
+                            if (href.includes('maps.') || href.includes('google.com/maps')) type = 'maps';
+                            
+                            link.setAttribute('onclick', `window.top.handleSpecialLink('${href}', '${type}')`);
+                            link.style.cursor = 'pointer';
+                        }
+                    });
+                } catch (e) {
+                    // Ignora erros de cross-origin
+                }
+            }, 2000);
+        }
+
+        // Função global para lidar com links especiais
+        window.handleSpecialLink = function(href, type) {
+            const redirectUrl = `redirect.html?url=${encodeURIComponent(href)}&type=${type}`;
+            window.open(redirectUrl, '_blank');
+        };
+
         function setupViewer() {
             const lang = getLanguageFromURL();
             const pdfViewer = document.getElementById('pdfViewer');
             const languageBadge = document.getElementById('languageBadge');
             const flagIcon = document.getElementById('flagIcon');
             
-            // Define a URL do PDF
             const fileId = PDF_IDS[lang];
             pdfViewer.src = getPDFUrl(fileId);
             
-            // Atualiza o badge com a bandeira e código do idioma
             languageBadge.textContent = lang.toUpperCase();
             flagIcon.src = LANGUAGE_FLAGS[lang];
             
-            // Configura para interceptar links (funciona parcialmente no Google Drive)
-            setupLinkInterception();
+            // Inicia o monitoramento de links
+            setTimeout(handleAutoLinks, 3000);
         }
-
-        // Tenta interceptar links (solução alternativa)
-        function setupLinkInterception() {
-            // Tenta configurar periodicamente devido às limitações do Google Drive
-            const interval = setInterval(() => {
-                const iframe = document.getElementById('pdfViewer');
-                if (iframe.contentDocument) {
-                    try {
-                        // Adiciona event listener para links no PDF
-                        const links = iframe.contentDocument.querySelectorAll('a');
-                        links.forEach(link => {
-                            link.setAttribute('target', '_blank');
-                            link.setAttribute('onclick', `handlePDFLink('${link.href}')`);
-                        });
-                    } catch (e) {
-                        // Cross-origin limitation, vamos usar outra abordagem
-                    }
-                }
-            }, 2000);
-
-            // Para após 10 segundos
-            setTimeout(() => clearInterval(interval), 10000);
-        }
-
-        // Função para lidar com links do PDF
-        function handlePDFLink(url) {
-            if (url) {
-                openExternalLink(url);
-            }
-        }
-
-        // Abre links externos de forma compatível
-        function openExternalLink(url) {
-            console.log('Tentando abrir:', url);
-            
-            // Para telefones
-            if (url.startsWith('tel:')) {
-                window.open(url, '_system');
-            }
-            // Para emails
-            else if (url.startsWith('mailto:')) {
-                window.open(url, '_system');
-            }
-            // Para mapas - converte para formato universal
-            else if (url.includes('maps.') || url.includes('google.com/maps') || url.startsWith('geo:')) {
-                // Se já for uma URL do Google Maps, usa diretamente
-                if (url.includes('google.com/maps')) {
-                    window.open(url, '_system');
-                } else {
-                    // Converte coordenadas ou endereços
-                    const mapsUrl = `https://maps.google.com/?q=${encodeURIComponent(url)}`;
-                    window.open(mapsUrl, '_system');
-                }
-            }
-            // Para URLs web
-            else if (url.startsWith('http')) {
-                window.open(url, '_system');
-            }
-        }
-
-        // Expõe a função globalmente para o PDF acessar
-        window.handlePDFLink = handlePDFLink;
-        window.openExternalLink = openExternalLink;
 
         function goBack() {
             window.location.href = 'index.html';
         }
 
-        // Inicializa quando a página carrega
         document.addEventListener('DOMContentLoaded', setupViewer);
     </script>
 </body>
