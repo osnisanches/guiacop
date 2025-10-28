@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guia COP - Selecione o Idioma</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Estilo adicional para garantir cliques */
+        .flag-btn {
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -13,20 +19,21 @@
             <p>Selecione seu idioma / Select your language / Seleccione su idioma</p>
             
             <div class="flags">
-                <button class="flag-btn" onclick="selectLanguage('pt')">
+                <!-- Links diretos para viewer.html com parâmetros -->
+                <a href="viewer.html?lang=pt" class="flag-btn">
                     <img src="https://flagcdn.com/w40/br.png" alt="Português">
                     <span>Português</span>
-                </button>
+                </a>
                 
-                <button class="flag-btn" onclick="selectLanguage('en')">
+                <a href="viewer.html?lang=en" class="flag-btn">
                     <img src="https://flagcdn.com/w40/us.png" alt="English">
                     <span>English</span>
-                </button>
+                </a>
                 
-                <button class="flag-btn" onclick="selectLanguage('es')">
+                <a href="viewer.html?lang=es" class="flag-btn">
                     <img src="https://flagcdn.com/w40/es.png" alt="Español">
                     <span>Español</span>
-                </button>
+                </a>
             </div>
             
             <div class="auto-open">
