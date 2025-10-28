@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecionando...</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .redirect-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+        
+        p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .url-display {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 15px 0;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="redirect-container">
+        <div class="spinner"></div>
+        <h1>Redirecionando...</h1>
+        <p>Você está sendo direcionado para um link externo:</p>
+        <div class="url-display" id="urlDisplay"></div>
+        <p>Se o redirecionamento não funcionar automaticamente, use os botões abaixo:</p>
+        
+        <button class="btn" onclick="openLink()">Abrir Link</button>
+        <button class="btn btn-secondary" onclick="goBack()">Voltar</button>
+    </div>
+
+    <script>
+        // Obtém a URL do parâmetro
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetUrl = urlParams.get('url');
+        const urlType = urlParams.get('type');
+        
+        // Exibe a URL
+        document.getElementById('urlDisplay').textContent = decodeURIComponent(targetUrl);
+        
+        // Define o título baseado no tipo
+        if (urlType === 'tel') {
+            document.querySelector('h1').textContent = 'Abrir Telefone';
+            document.querySelector('p').textContent = 'Você está abrindo um número de telefone:';
+        } else if (urlType === 'maps') {
+            document.querySelector('h1').textContent = 'Abrir Mapa';
+            document.querySelector('p').textContent = 'Você está abrindo o Google Maps:';
+        }
+        
+        function openLink() {
+            if (targetUrl) {
+                window.open(decodeURIComponent(targetUrl), '_system');
+            }
+        }
+        
+        function goBack() {
+            window.history.back();
+        }
+        
+        // Redirecionamento automático após 3 segundos
+        setTimeout(() => {
+            openLink();
+        }, 3000);
+    </script>
+</body>
+</html>
