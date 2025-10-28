@@ -1,186 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Guia COP</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .viewer-container {
-            width: 100vw;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background: white;
-        }
-        
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255,255,255,0.95);
-            padding: 10px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .back-btn {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        
-        .language-indicator {
-            font-size: 14px;
-            color: #333;
-            font-weight: 500;
-        }
+/* Estilos para o badge flutuante no viewer */
+.floating-badge {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(102, 126, 234, 0.9);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
 
-        /* Ajuste para compensar o header */
-        .viewer-container {
-            padding-top: 50px;
-            height: calc(100vh - 50px);
-        }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <button class="back-btn" onclick="goBack()">← Voltar</button>
-        <div class="language-indicator" id="languageIndicator">Português</div>
-    </div>
-    
-    <div class="viewer-container">
-        <iframe id="pdfViewer" src=""></iframe>
-    </div>
+.floating-badge:hover {
+    background: rgba(102, 126, 234, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
 
-    <script>
-        // Mapeamento de idiomas
-        const LANGUAGE_NAMES = {
-            'pt': 'Português',
-            'en': 'English', 
-            'es': 'Español'
-        };
-
-        // IDs dos PDFs atualizados
-        const PDF_IDS = {
-            'pt': '17GBTGkHB1s_nKUjjPCUvGDn8pDAIqtlF',
-            'en': '1_BwDQ1G8zMeclAOEH_OdpbXGmTPq0Ayf',
-            'es': '1dNRiqi6PGDdLTDoz8dHx9XVp4PSDMoB3'
-        };
-
-        // Gera a URL otimizada para o PDF
-        function getPDFUrl(fileId) {
-            const baseParams = 'toolbar=0&navpanes=0&scrollbar=0&view=fitH&embedded=true';
-            return `https://drive.google.com/file/d/${fileId}/preview?${baseParams}`;
-        }
-
-        // Obtém o idioma da URL
-        function getLanguageFromURL() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('lang') || 'pt';
-        }
-
-        // Configura o visualizador
-        function setupViewer() {
-            const lang = getLanguageFromURL();
-            const pdfViewer = document.getElementById('pdfViewer');
-            const languageIndicator = document.getElementById('languageIndicator');
-            
-            // Define a URL do PDF
-            const fileId = PDF_IDS[lang];
-            pdfViewer.src = getPDFUrl(fileId);
-            
-            // Atualiza o indicador de idioma
-            languageIndicator.textContent = LANGUAGE_NAMES[lang];
-            
-            // Configura para interceptar links (funciona parcialmente no Google Drive)
-            setupLinkInterception();
-        }
-
-        // Tenta interceptar links (solução alternativa)
-        function setupLinkInterception() {
-            // Tenta configurar periodicamente devido às limitações do Google Drive
-            const interval = setInterval(() => {
-                const iframe = document.getElementById('pdfViewer');
-                if (iframe.contentDocument) {
-                    try {
-                        // Adiciona event listener para links no PDF
-                        const links = iframe.contentDocument.querySelectorAll('a');
-                        links.forEach(link => {
-                            link.setAttribute('target', '_blank');
-                            link.setAttribute('onclick', `handlePDFLink('${link.href}')`);
-                        });
-                    } catch (e) {
-                        // Cross-origin limitation, vamos usar outra abordagem
-                    }
-                }
-            }, 2000);
-
-            // Para após 10 segundos
-            setTimeout(() => clearInterval(interval), 10000);
-        }
-
-        // Função para lidar com links do PDF
-        function handlePDFLink(url) {
-            if (url) {
-                openExternalLink(url);
-            }
-        }
-
-        // Abre links externos de forma compatível
-        function openExternalLink(url) {
-            console.log('Tentando abrir:', url);
-            
-            // Para telefones
-            if (url.startsWith('tel:')) {
-                window.open(url, '_system');
-            }
-            // Para emails
-            else if (url.startsWith('mailto:')) {
-                window.open(url, '_system');
-            }
-            // Para mapas - converte para formato universal
-            else if (url.includes('maps.') || url.includes('google.com/maps') || url.startsWith('geo:')) {
-                // Se já for uma URL do Google Maps, usa diretamente
-                if (url.includes('google.com/maps')) {
-                    window.open(url, '_system');
-                } else {
-                    // Converte coordenadas ou endereços
-                    const mapsUrl = `https://maps.google.com/?q=${encodeURIComponent(url)}`;
-                    window.open(mapsUrl, '_system');
-                }
-            }
-            // Para URLs web
-            else if (url.startsWith('http')) {
-                window.open(url, '_system');
-            }
-        }
-
-        // Expõe a função globalmente para o PDF acessar
-        window.handlePDFLink = handlePDFLink;
-        window.openExternalLink = openExternalLink;
-
-        function goBack() {
-            window.location.href = 'index.html';
-        }
-
-        // Inicializa quando a página carrega
-        document.addEventListener('DOMContentLoaded', setupViewer);
-    </script>
-</body>
-</html>
+.flag-small {
+    width: 16px;
+    height: 12px;
+    border-radius: 2px;
+}
