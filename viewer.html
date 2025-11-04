@@ -27,11 +27,9 @@
             right: 20px;
             background: rgba(74, 124, 89, 0.95);
             color: white;
-            padding: 12px 18px;
+            padding: 10px 15px;
             border-radius: 25px;
             cursor: pointer;
-            font-size: 12px;
-            font-weight: 500;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.3);
@@ -39,7 +37,7 @@
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
         
         .floating-badge:hover {
@@ -49,15 +47,10 @@
         }
         
         .flag-small {
-            width: 20px;
-            height: 15px;
-            border-radius: 2px;
-        }
-        
-        .badge-content {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            width: 24px;
+            height: 18px;
+            border-radius: 3px;
+            cursor: pointer;
         }
         
         .download-icon {
@@ -65,6 +58,7 @@
             padding: 5px;
             border-radius: 50%;
             transition: background 0.3s ease;
+            font-size: 16px;
         }
         
         .download-icon:hover {
@@ -79,12 +73,9 @@
     </style>
 </head>
 <body>
-    <!-- Badge com bandeira e ícone de download -->
+    <!-- Badge apenas com ícones (sem texto) -->
     <div class="floating-badge">
-        <div class="badge-content">
-            <img src="" alt="" class="flag-small" id="flagIcon">
-            <span onclick="goBack()">Trocar Idioma</span>
-        </div>
+        <img src="" alt="Trocar idioma" class="flag-small" id="flagIcon" onclick="goBack()">
         <div class="separator"></div>
         <div class="download-icon" onclick="downloadPDF()" title="Baixar PDF">
             ⬇️
@@ -96,13 +87,14 @@
     </div>
 
     <script>
-        // Mapeamento de idiomas, bandeiras e IDs atualizados
+        // Mapeamento de idiomas, bandeiras e IDs CORRETOS
         const LANGUAGE_FLAGS = {
             'pt': 'https://flagcdn.com/w40/br.png',
             'en': 'https://flagcdn.com/w40/us.png',
             'es': 'https://flagcdn.com/w40/es.png'
         };
 
+        // IDs CORRETOS para visualização
         const PDF_IDS = {
             'pt': '1FVxXtoZqTHVKNi3pJfAKUcbK74H7UdYb',
             'en': '1BcMykn265iOd0DEbVgfKqfacgi86sDj0',
@@ -158,7 +150,10 @@
             const pdfViewer = document.getElementById('pdfViewer');
             const flagIcon = document.getElementById('flagIcon');
             
+            // USA O ID CORRETO para o idioma selecionado
             const fileId = PDF_IDS[lang];
+            console.log('Carregando PDF para idioma:', lang, 'ID:', fileId);
+            
             pdfViewer.src = getPDFUrl(fileId);
             
             // Define a bandeira correta no badge
