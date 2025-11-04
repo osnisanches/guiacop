@@ -1,8 +1,8 @@
 // IDs dos PDFs no Google Drive para cada idioma
 const PDF_URLS = {
-    'pt': '17GBTGkHB1s_nKUjjPCUvGDn8pDAIqtlF',
-    'en': '1_BwDQ1G8zMeclAOEH_OdpbXGmTPq0Ayf',
-    'es': '1dNRiqi6PGDdLTDoz8dHx9XVp4PSDMoB3'
+    'pt': '1FVxXtoZqTHVKNi3pJfAKUcbK74H7UdYb',
+    'en': '1BcMykn265iOd0DEbVgfKqfacgi86sDj0',
+    'es': '1mPO9BX0_IDNJzmIHRGT7VDXxZ1wZatMM'
 };
 
 function selectLanguage(lang) {
