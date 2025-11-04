@@ -1,4 +1,4 @@
-// IDs dos PDFs no Google Drive para cada idioma
+// IDs dos PDFs no Google Drive atualizados
 const PDF_URLS = {
     'pt': '1FVxXtoZqTHVKNi3pJfAKUcbK74H7UdYb',
     'en': '1BcMykn265iOd0DEbVgfKqfacgi86sDj0',
