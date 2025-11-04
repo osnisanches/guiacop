@@ -6,11 +6,37 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+}
+
+/* Imagem de fundo */
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('fundosite.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1;
+}
+
+/* Overlay para melhor legibilidade */
+.background-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(2px);
 }
 
 .container {
@@ -20,111 +46,129 @@ body {
 }
 
 .language-selection {
-    background: white;
-    border-radius: 15px;
-    padding: 30px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 30px 25px;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.3);
 }
 
+/* Container da logo */
+.logo-container {
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.logo {
+    max-width: 150px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Título principal */
 .language-selection h1 {
-    color: #333;
-    margin-bottom: 10px;
-    font-size: 24px;
+    color: #2c5530;
+    margin-bottom: 5px;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+/* Subtítulo */
+.language-selection h2 {
+    color: #4a7c59;
+    margin-bottom: 20px;
+    font-size: 15px;
+    font-weight: normal;
 }
 
 .language-selection p {
     color: #666;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     font-size: 14px;
+    line-height: 1.4;
 }
 
 .flags {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    margin-bottom: 25px;
+    gap: 12px;
+    margin-bottom: 20px;
 }
 
 .flag-btn {
     display: flex;
     align-items: center;
-    padding: 15px 20px;
-    border: 2px solid #e0e0e0;
-    border-radius: 10px;
-    background: white;
+    padding: 14px 18px;
+    border: 2px solid rgba(224, 224, 224, 0.8);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.9);
     cursor: pointer;
     transition: all 0.3s ease;
     width: 100%;
+    text-decoration: none;
+    backdrop-filter: blur(5px);
 }
 
 .flag-btn:hover {
-    border-color: #667eea;
+    border-color: #4a7c59;
+    background: rgba(255, 255, 255, 1);
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
 .flag-btn img {
-    width: 30px;
-    height: 20px;
+    width: 28px;
+    height: 18px;
     margin-right: 15px;
     border-radius: 2px;
 }
 
 .flag-btn span {
-    font-size: 16px;
+    font-size: 15px;
     color: #333;
     font-weight: 500;
 }
 
 .auto-open {
     text-align: left;
-    padding: 15px 0;
-    border-top: 1px solid #eee;
+    padding: 15px 0 5px 0;
+    border-top: 1px solid rgba(0,0,0,0.1);
 }
 
 .auto-open label {
     display: flex;
     align-items: center;
-    font-size: 14px;
+    font-size: 13px;
     color: #666;
     cursor: pointer;
 }
 
 .auto-open input {
-    margin-right: 10px;
+    margin-right: 8px;
 }
 
-/* Estilos para o badge flutuante no viewer */
-.floating-badge {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: rgba(102, 126, 234, 0.9);
-    color: white;
-    padding: 8px 12px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: 500;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.2);
-    z-index: 1000;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.floating-badge:hover {
-    background: rgba(102, 126, 234, 1);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-}
-
-.flag-small {
-    width: 16px;
-    height: 12px;
-    border-radius: 2px;
+/* Responsividade para telas menores */
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .language-selection {
+        padding: 25px 20px;
+    }
+    
+    .logo {
+        max-width: 120px;
+    }
+    
+    .language-selection h1 {
+        font-size: 24px;
+    }
+    
+    .flag-btn {
+        padding: 12px 16px;
+    }
 }
