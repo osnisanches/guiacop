@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guia Papa Xibé - COP30</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Meta tags para PWA -->
+    <meta name="theme-color" content="#4a7c59">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
 </head>
 <body>
     <div class="background-image"></div>
@@ -37,6 +41,16 @@
                     <img src="https://flagcdn.com/w40/es.png" alt="Español">
                     <span>Español</span>
                 </a>
+            </div>
+
+            <!-- Botão PWA para criar atalho -->
+            <div id="pwa-section" class="pwa-section">
+                <button id="pwa-button" class="pwa-button">
+                    📲 Criar Atalho do App
+                </button>
+                <div id="pwa-instructions" class="pwa-instructions">
+                    <!-- As instruções serão inseridas aqui via JavaScript -->
+                </div>
             </div>
             
             <div class="auto-open">
