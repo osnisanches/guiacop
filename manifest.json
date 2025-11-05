@@ -2,19 +2,19 @@
     "name": "Guia Papa Xibé - COP30",
     "short_name": "Guia Papa Xibé",
     "description": "Guia para visitantes da COP30",
-    "start_url": "/guiacop/index.html",
+    "start_url": "/index.html",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#4a7c59",
     "orientation": "portrait",
     "icons": [
         {
-            "src": "guiacoplogo.png",
+            "src": "guiacoplogo2.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "guiacoplogo.png",
+            "src": "guiacoplogo2.png",
             "sizes": "512x512",
             "type": "image/png"
         }
