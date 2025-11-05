@@ -1,3 +1,16 @@
+// URLs atualizadas para download direto do GitHub
+const PDF_DOWNLOAD_URLS = {
+    'pt': 'guia_pt.pdf',
+    'en': 'guia_en.pdf',
+    'es': 'guia_es.pdf'
+};
+
+const PDF_NAMES = {
+    'pt': 'Guia_Papa_Xibe_Portugues.pdf',
+    'en': 'Guia_Papa_Xibe_English.pdf', 
+    'es': 'Guia_Papa_Xibe_Espanol.pdf'
+};
+
 // IDs dos PDFs no Google Drive atualizados
 const PDF_URLS = {
     'pt': '1FVxXtoZqTHVKNi3pJfAKUcbK74H7UdYb',
