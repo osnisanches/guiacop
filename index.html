@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BZ4WPM5RHP"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-BZ4WPM5RHP');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guia Papa Xibé - COP30</title>
@@ -21,13 +29,13 @@
                 <img src="guiacoplogo.png" alt="Guia COP Logo" class="logo">
             </div>
             
-            <!-- Título -->
+            <!-- Texto principal -->
             <h1>Guia Papa Xibé</h1>
             <h2>Para visitantes da COP30</h2>
             <p>Selecione seu idioma / Select your language / Seleccione su idioma</p>
             
             <div class="flags">
-                <!-- Botões com bandeiras -->
+                <!-- bandeirinhas -->
                 <a href="viewer.html?lang=pt" class="flag-btn">
                     <img src="https://flagcdn.com/w40/br.png" alt="Português">
                     <span>Português</span>
@@ -44,22 +52,23 @@
                 </a>
             </div>
 
-            <!-- Botão PWA para criar atalho -->
+
             <div id="pwa-section" class="pwa-section">
                 <button id="pwa-button" class="pwa-button">
                     📲 Criar Atalho do App
                 </button>
                 <div id="pwa-instructions" class="pwa-instructions">
-                    <!-- As instruções serão inseridas aqui via JavaScript -->
+                   
                 </div>
             </div>
             
-            <div class="auto-open">
+            <!--<div class="auto-open">
                 <label>
                     <input type="checkbox" id="autoOpen" checked>
                     Abrir automaticamente na próxima vez
                 </label>
             </div>
+            -->    
         </div>
     </div>
     
